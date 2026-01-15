@@ -20,108 +20,29 @@
  */
 
 // Import necessary libraries and components
-import { useState, useEffect } from "react"; // For state management and side effects
+import { useTheme } from "@mui/material/styles"; // Get the theme from Providers
 import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa"; // Social media icons
 import { HiOutlineMail } from "react-icons/hi"; // Email icon
 import { IoMoon, IoSunny } from "react-icons/io5"; // Theme toggle icons
-import Image from "next/image"; // Next.js optimized Image component
 import {
   AppBar, // Top navigation bar
   Box, // Basic layout container
   Button, // Clickable buttons
-  Card, // Card components for projects
-  CardActions, // Bottom section of cards for buttons
-  CardContent, // Main content area of cards
   Container, // Centered, width-limited container
-  createTheme, // Function to create a theme
-  CssBaseline, // Resets CSS to a consistent baseline
   Divider, // Horizontal line separator
   Grid as MuiGrid, // Layout grid system
   IconButton, // Button with just an icon
   Link, // Hyperlink component
   Paper, // Elevated surfaces
   TextField, // Text input fields
-  ThemeProvider, // Provides theme to child components
   Toolbar, // Container for app bar content
   Typography, // Text component with different variants
-  useMediaQuery, // Hook to check media queries
 } from "@mui/material";
 
 // Main component for the entire page
 export default function Home() {
-  // Check if user's system prefers dark mode
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  // State to track if dark mode is active
-  const [darkMode, setDarkMode] = useState(true);
-
-  // Update dark mode when system preference changes
-  useEffect(() => {
-    setDarkMode(prefersDarkMode);
-  }, [prefersDarkMode]);
-
-  // Create a theme based on dark/light mode preference
-  const theme = createTheme({
-    // Color palette configuration
-    palette: {
-      mode: darkMode ? 'dark' : 'light', // Overall theme mode
-      primary: {
-        main: '#3a86ff', // Primary blue color
-      },
-      secondary: {
-        main: '#ff006e', // Secondary pink color
-      },
-      background: {
-        default: darkMode ? '#0a1929' : '#f8fafc', // Page background
-        paper: darkMode ? '#132f4c' : '#ffffff', // Card/paper background
-      },
-    },
-    // Typography (font) settings
-    typography: {
-      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-      // Make headings bold
-      h1: { fontWeight: 700 },
-      h2: { fontWeight: 700 },
-      h3: { fontWeight: 600 },
-      h4: { fontWeight: 600 },
-      h5: { fontWeight: 600 },
-      h6: { fontWeight: 600 },
-    },
-    // Shape settings (like border radius)
-    shape: {
-      borderRadius: 12, // Rounded corners
-    },
-    // Component-specific style overrides
-    components: {
-      // Button styling
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            textTransform: 'none', // Don't uppercase button text
-            fontWeight: 600, // Semi-bold button text
-            borderRadius: 8, // Rounded button corners
-            padding: '10px 20px', // Button padding
-          },
-        },
-      },
-      // Card styling
-      MuiCard: {
-        styleOverrides: {
-          root: {
-            borderRadius: 16, // More rounded card corners
-            overflow: 'hidden', // Hide overflow
-          },
-        },
-      },
-      // Paper styling
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            borderRadius: 16, // Rounded paper corners
-          },
-        },
-      },
-    },
-  });
+  const theme = useTheme();
+  const darkMode = theme.palette.mode === 'dark';
 
   // Custom styles for various elements throughout the site
   const styles = {
@@ -257,34 +178,6 @@ export default function Home() {
     },
   };
 
-  // Sample project data - replace with your own
-  const projectsData = [
-    {
-      title: "E-commerce Platform",
-      description: "A full-stack e-commerce solution with React, Node.js, and Stripe integration that handles 10,000+ monthly transactions.",
-      image: "/project1.jpg",
-      technologies: ["React", "Node.js", "MongoDB"],
-      github: "https://github.com/johndoe/ecommerce",
-      demo: "https://ecommerce-demo.example.com"
-    },
-    {
-      title: "SaaS Analytics Dashboard",
-      description: "An analytics dashboard for SaaS businesses with real-time data visualization and custom reporting features.",
-      image: "/project2.jpg",
-      technologies: ["Next.js", "TypeScript", "D3.js"],
-      github: "https://github.com/johndoe/saas-dashboard",
-      demo: "https://saas-dashboard.example.com"
-    },
-    {
-      title: "AI Chat Application",
-      description: "A real-time chat application with AI-powered responses and language translation supporting 20+ languages.",
-      image: "/project3.jpg",
-      technologies: ["React", "Socket.io", "OpenAI API"],
-      github: "https://github.com/johndoe/ai-chat",
-      demo: "https://ai-chat.example.com"
-    },
-  ];
-
   // Frontend skills with proficiency levels
   const frontendSkills = [
     { name: "React / Next.js", value: 95 },
@@ -317,9 +210,7 @@ export default function Home() {
 
   // THE ACTUAL WEBSITE LAYOUT STARTS HERE
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Reset CSS for consistency */}
-      <Box sx={styles.gradientBg}>
+    <Box sx={styles.gradientBg}>
         {/* ===== NAVIGATION BAR ===== */}
         <AppBar position="sticky" elevation={0} sx={styles.navBar} color="transparent">
           <Container maxWidth="lg">
@@ -438,7 +329,10 @@ export default function Home() {
                   ml: 2,
                 }}>
                   <IconButton 
-                    onClick={() => setDarkMode(!darkMode)} 
+                    onClick={() => {
+                      // Dispatch custom event to toggle dark mode in Providers
+                      window.dispatchEvent(new CustomEvent('toggleDarkMode'));
+                    }} 
                     sx={{ ml: 1 }}
                     color="inherit"
                   >
@@ -596,7 +490,7 @@ export default function Home() {
                 paragraph 
                 sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}
               >
-                As a college student aiming for a career in Information Technology, some of the things I'll specialize in will be creating
+                As a college student aiming for a career in Information Technology, some of the things I&apos;ll specialize in will be creating
                 high-performance, responsive web applications using React, Next.js, and Node.js. My
                 approach will combine technical expertise with a strong focus on user experience and clean,
                 maintainable code.
@@ -657,7 +551,7 @@ export default function Home() {
             {/* Projects grid - using Card components */}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
-                There's no projects here at the moment, but this section will have more added to it as I gain more experience.
+                There&apos;s no projects here at the moment, but this section will have more added to it as I gain more experience.
               </Typography>
             </Box>
           </Container>
@@ -1065,6 +959,5 @@ export default function Home() {
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
   );
 }
