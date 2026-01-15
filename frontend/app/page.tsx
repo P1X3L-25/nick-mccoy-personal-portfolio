@@ -301,8 +301,7 @@ export default function Home() {
 
   // Other technologies you're familiar with
   const otherTechnologies = [
-    "Docker", "AWS", "CI/CD", "Jest", "Git", 
-    "Redux", "Firebase", "Webpack", "TailwindCSS", "Figma"
+    "Git", "TailwindCSS", "Python", "Linux"
   ];
 
   // Function to smoothly scroll to different sections
@@ -489,7 +488,7 @@ export default function Home() {
                       WebkitTextFillColor: 'transparent',
                     }}
                   >
-                    Full Stack Developer
+                    I.T. Generalist
                   </Typography>
                 </Typography>
                 <Typography 
@@ -497,8 +496,7 @@ export default function Home() {
                   color="text.secondary" 
                   sx={{ fontSize: '1.1rem', mt: 3, mb: 4 }}
                 >
-                  I create sophisticated web applications that deliver exceptional
-                  user experiences with modern technologies and clean code.
+                  I build high-performance, responsive web applications and solutions.
                 </Typography>
                 <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
                   <Button
@@ -598,9 +596,9 @@ export default function Home() {
                 paragraph 
                 sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}
               >
-                With over 5 years of experience in web development, I specialize in creating
+                As a college student aiming for a career in Information Technology, some of the things I'll specialize in will be creating
                 high-performance, responsive web applications using React, Next.js, and Node.js. My
-                approach combines technical expertise with a strong focus on user experience and clean,
+                approach will combine technical expertise with a strong focus on user experience and clean,
                 maintainable code.
               </Typography>
               <Typography 
@@ -608,10 +606,7 @@ export default function Home() {
                 paragraph
                 sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}
               >
-                Previously, I worked at XYZ Technologies where I led the frontend development team,
-                improving application performance by 40% and implementing CI/CD pipelines that reduced
-                deployment time by 65%. I&apos;m passionate about sharing knowledge and have contributed to
-                several open-source projects.
+                I am passionate about leveraging modern web technologies to build solutions that not only meet end-user needs but also drive business success.
               </Typography>
               
               {/* Resume download button */}
@@ -661,62 +656,9 @@ export default function Home() {
             
             {/* Projects grid - using Card components */}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              {projectsData.map((project, index) => (
-                <Card key={index} sx={styles.projectCard} elevation={darkMode ? 1 : 2}>
-                  {/* Card content - title, description, technologies */}
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h5" component="h3" fontWeight="bold" gutterBottom>
-                      {project.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" paragraph>
-                      {project.description}
-                    </Typography>
-                    
-                    {/* Technology tags */}
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}>
-                      {project.technologies.map((tech, techIndex) => (
-                        <Box
-                          key={techIndex}
-                          component="span"
-                          sx={{
-                            px: 1.5,
-                            py: 0.5,
-                            bgcolor: darkMode ? 'rgba(58, 134, 255, 0.15)' : '#eef6ff',
-                            color: darkMode ? '#90caf9' : '#1565c0',
-                            borderRadius: 10,
-                            fontSize: '0.75rem',
-                            fontWeight: 600,
-                          }}
-                        >
-                          {tech}
-                        </Box>
-                      ))}
-                    </Box>
-                  </CardContent>
-                  
-                  {/* Card actions - buttons for code and demo */}
-                  <CardActions sx={{ p: 2, pt: 0 }}>
-                    <Button 
-                      size="small" 
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      startIcon={<FaGithub />}
-                    >
-                      Code
-                    </Button>
-                    <Button 
-                      size="small" 
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      color="primary"
-                    >
-                      Live Demo
-                    </Button>
-                  </CardActions>
-                </Card>
-              ))}
+              <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
+                There's no projects here at the moment, but this section will have more added to it as I gain more experience.
+              </Typography>
             </Box>
           </Container>
         </Box>
@@ -932,7 +874,7 @@ export default function Home() {
                   paragraph
                   sx={{ mb: 3 }}
                 >
-                  I&apos;m currently looking for new opportunities and freelance projects. If you&apos;d like to
+                  I&apos;m always looking for new opportunities and projects. If you&apos;d like to
                   discuss a potential collaboration or just want to say hi, feel free to reach out!
                 </Typography>
                 
