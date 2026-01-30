@@ -48,17 +48,18 @@ import {
 
 // Main component for the entire page
 export default function Home() {
-  // State to track if dark mode is active - initialize to false to match server
-  const [darkMode, setDarkMode] = useState(false);
+  // State to track if component is mounted (prevents hydration mismatch)
   const [mounted, setMounted] = useState(false);
+  // State to track if dark mode is active
+  const [darkMode, setDarkMode] = useState(false);
 
-  // Check if user's system prefers dark mode (client-side only)
+  // Detect system preference and mark component as mounted
   useEffect(() => {
-    // Mark as mounted to prevent hydration mismatch
-    setMounted(true);
     // Check system preference after mounting
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     setDarkMode(prefersDarkMode);
+    // Mark as mounted - this triggers a re-render with the correct values
+    setMounted(true);
   }, []);
 
   // Create a theme based on dark/light mode preference
