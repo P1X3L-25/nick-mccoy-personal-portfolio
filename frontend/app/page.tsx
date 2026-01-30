@@ -44,20 +44,22 @@ import {
   ThemeProvider, // Provides theme to child components
   Toolbar, // Container for app bar content
   Typography, // Text component with different variants
-  useMediaQuery, // Hook to check media queries
 } from "@mui/material";
 
 // Main component for the entire page
 export default function Home() {
-  // Check if user's system prefers dark mode
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  // State to track if dark mode is active
-  const [darkMode, setDarkMode] = useState(true);
+  // State to track if dark mode is active - initialize to false to match server
+  const [darkMode, setDarkMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Update dark mode when system preference changes
+  // Check if user's system prefers dark mode (client-side only)
   useEffect(() => {
+    // Mark as mounted to prevent hydration mismatch
+    setMounted(true);
+    // Check system preference after mounting
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     setDarkMode(prefersDarkMode);
-  }, [prefersDarkMode]);
+  }, []);
 
   // Create a theme based on dark/light mode preference
   const theme = createTheme({
