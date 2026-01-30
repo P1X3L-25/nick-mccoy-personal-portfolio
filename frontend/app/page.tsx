@@ -21,7 +21,7 @@
 
 // Import necessary libraries and components
 import { useState, useEffect } from "react"; // For state management and side effects
-import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa"; // Social media icons
+import { FaGithub, FaLinkedinIn, FaTwitter, FaFacebook } from "react-icons/fa"; // Social media icons
 import { HiOutlineMail } from "react-icons/hi"; // Email icon
 import { IoMoon, IoSunny } from "react-icons/io5"; // Theme toggle icons
 import Image from "next/image"; // Next.js optimized Image component
@@ -414,7 +414,7 @@ export default function Home() {
                   
                   {/* Twitter link */}
                   <IconButton 
-                    href="https://twitter.com/johndoe" 
+                    href="https://facebook.com/nick.mccoy.1272" 
                     target="_blank"
                     rel="noopener noreferrer"
                     color="inherit"
@@ -428,7 +428,7 @@ export default function Home() {
                       }
                     }}
                   >
-                    <FaTwitter />
+                    <FaFacebook />
                   </IconButton>
                 </Box>
 
@@ -992,7 +992,7 @@ export default function Home() {
                       <FaLinkedinIn />
                     </IconButton>
                     <IconButton 
-                      href="https://twitter.com/johndoe" 
+                      href="https://facebook.com/nick.mccoy.1272" 
                       target="_blank"
                       rel="noopener noreferrer"
                       color="inherit"
@@ -1005,7 +1005,7 @@ export default function Home() {
                         }
                       }}
                     >
-                      <FaTwitter />
+                      <FaFacebook />
                     </IconButton>
                   </Box>
                 </Box>
