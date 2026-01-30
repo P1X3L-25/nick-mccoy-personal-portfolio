@@ -1,4 +1,4 @@
 {
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/.next"
+  "buildCommand": "sh -lc 'if [ -d frontend ]; then cd frontend && npm install && npm run build && mv .next ../.next; else npm install && npm run build; fi'",
+  "outputDirectory": ".next"
 }
