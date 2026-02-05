@@ -47,6 +47,8 @@ import {
   useMediaQuery, // Hook to check media queries
 } from "@mui/material";
 
+import JokeDisplay from "../components/JokeDisplay";
+
 // Main component for the entire page
 export default function Home() {
   // Check if user's system prefers dark mode
@@ -1102,6 +1104,7 @@ export default function Home() {
           </Container>
         </Box>
 
+        <JokeDisplay />
         {/* ===== FOOTER ===== */}
         <Box
           component="footer"
