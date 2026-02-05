@@ -1,0 +1,3 @@
+// This file should not be here - it's causing build issues
+// The actual jest.config.js is in the root frontend directory
+// Please delete this file
