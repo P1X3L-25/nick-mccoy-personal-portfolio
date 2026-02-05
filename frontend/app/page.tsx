@@ -54,9 +54,13 @@ export default function Home() {
   // State to track if dark mode is active
   const [darkMode, setDarkMode] = useState(true);
 
-  // Update dark mode when system preference changes
+  // Avoid hydration mismatch: only render theme-dependent markup after client mount
+  const [mounted, setMounted] = useState(false);
+
+  // Update dark mode when system preference changes and mark mounted
   useEffect(() => {
     setDarkMode(prefersDarkMode);
+    setMounted(true);
   }, [prefersDarkMode]);
 
   // Create a theme based on dark/light mode preference
@@ -71,7 +75,7 @@ export default function Home() {
         main: '#ff006e', // Secondary pink color
       },
       background: {
-        default: darkMode ? '#0a1929' : '#f8fafc', // Page background
+        default: darkMode ? '#0a1929' : '#eef6ff', // Page background (light blue)
         paper: darkMode ? '#132f4c' : '#ffffff', // Card/paper background
       },
     },
@@ -125,11 +129,9 @@ export default function Home() {
 
   // Custom styles for various elements throughout the site
   const styles = {
-    // Background gradient for the entire page
+    // Background for the entire page - use theme palette so global CSS/variables take effect
     gradientBg: {
-      background: darkMode 
-        ? 'linear-gradient(to bottom right, #0a1929, #132f4c)' // Dark mode gradient
-        : 'linear-gradient(to bottom right, #f8fafc, #e2e8f0)', // Light mode gradient
+      background: theme.palette.background.default,
       minHeight: '100vh', // Full viewport height
     },
     // Navigation bar styling
@@ -317,6 +319,12 @@ export default function Home() {
   };
 
   // THE ACTUAL WEBSITE LAYOUT STARTS HERE
+  if (!mounted) {
+    // Render a lightweight placeholder that uses the CSS variable background to avoid
+    // server/client markup differences while the client finishes mounting.
+    return <Box style={{ minHeight: '100vh', background: 'var(--background)' }} />;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /> {/* Reset CSS for consistency */}
@@ -561,7 +569,7 @@ export default function Home() {
           id="about" 
           sx={{ 
             py: 12, 
-            bgcolor: darkMode ? '#0a1929' : '#f8fafc',
+            bgcolor: darkMode ? '#0a1929' : '#eef6ff',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -727,7 +735,7 @@ export default function Home() {
           id="skills" 
           sx={{ 
             py: 12, 
-            bgcolor: darkMode ? '#0a1929' : '#f8fafc',
+            bgcolor: darkMode ? '#0a1929' : '#eef6ff',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -1099,7 +1107,7 @@ export default function Home() {
           component="footer"
           sx={{
             py: 4,
-            bgcolor: darkMode ? '#0a1929' : '#f8fafc',
+            bgcolor: darkMode ? '#0a1929' : '#eef6ff',
             borderTop: 1,
             borderColor: darkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
           }}
