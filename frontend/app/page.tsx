@@ -39,6 +39,7 @@ import {
   Typography, // Text component with different variants
   createTheme, // Create custom theme
   useMediaQuery, // Hook to detect media queries
+  ThemeProvider, // Apply theme to components
 } from "@mui/material";
 
 import JokeDisplay from "../components/JokeDisplay";
@@ -73,6 +74,10 @@ export default function Home() {
       background: {
         default: darkMode ? '#04102b' : '#f8fafc', // Page background
         paper: darkMode ? '#132f4c' : '#ffffff', // Card/paper background
+      },
+      text: {
+        primary: darkMode ? '#ffffff' : '#000000', // White text in dark mode, black in light mode
+        secondary: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)', // Secondary text color
       },
     },
     // Typography (font) settings
@@ -293,7 +298,8 @@ export default function Home() {
   }
 
   return (
-    <Box sx={styles.gradientBg}>
+    <ThemeProvider theme={theme}>
+      <Box sx={styles.gradientBg}>
         {/* ===== NAVIGATION BAR ===== */}
         <AppBar position="sticky" elevation={0} sx={styles.navBar} color="transparent">
           <Container maxWidth="lg">
@@ -308,29 +314,25 @@ export default function Home() {
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                   <Button 
                     onClick={() => scrollToSection('about')} 
-                    color="inherit" 
-                    sx={{ mx: 1 }}
+                    sx={{ mx: 1, color: 'text.primary' }}
                   >
                     About
                   </Button>
                   <Button 
                     onClick={() => scrollToSection('projects')} 
-                    color="inherit" 
-                    sx={{ mx: 1 }}
+                    sx={{ mx: 1, color: 'text.primary' }}
                   >
                     Projects
                   </Button>
                   <Button 
                     onClick={() => scrollToSection('skills')} 
-                    color="inherit" 
-                    sx={{ mx: 1 }}
+                    sx={{ mx: 1, color: 'text.primary' }}
                   >
                     Skills
                   </Button>
                   <Button 
                     onClick={() => scrollToSection('contact')} 
-                    color="inherit" 
-                    sx={{ mx: 1 }}
+                    sx={{ mx: 1, color: 'text.primary' }}
                   >
                     Contact
                   </Button>
@@ -352,13 +354,13 @@ export default function Home() {
                     href="https://github.com/P1X3L-25" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    color="inherit"
                     size="small"
                     sx={{ 
                       mx: 0.5,
+                      color: theme.palette.text.primary,
                       transition: 'transform 0.2s, color 0.2s',
                       '&:hover': {
-                        color: darkMode ? '#f0f6fc' : '#24292e',
+                        color: '#3a86ff',
                         transform: 'translateY(-3px)'
                       }
                     }}
@@ -371,10 +373,10 @@ export default function Home() {
                     href="https://linkedin.com/in/nick-mccoy-aa381b38b/" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    color="inherit"
                     size="small"
                     sx={{ 
                       mx: 0.5,
+                      color: theme.palette.text.primary,
                       transition: 'transform 0.2s, color 0.2s',
                       '&:hover': {
                         color: '#0a66c2',
@@ -390,10 +392,10 @@ export default function Home() {
                     href="https://facebook.com/nick.mccoy.1272" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    color="inherit"
                     size="small"
                     sx={{ 
                       mx: 0.5,
+                      color: theme.palette.text.primary,
                       transition: 'transform 0.2s, color 0.2s',
                       '&:hover': {
                         color: '#1da1f2',
@@ -413,11 +415,9 @@ export default function Home() {
                 }}>
                   <IconButton 
                     onClick={() => {
-                      // Dispatch custom event to toggle dark mode in Providers
-                      window.dispatchEvent(new CustomEvent('toggleDarkMode'));
+                      setDarkMode(!darkMode);
                     }} 
-                    sx={{ ml: 1 }}
-                    color="inherit"
+                    sx={{ ml: 1, color: theme.palette.text.primary }}
                   >
                     {darkMode ? <IoSunny /> : <IoMoon />}
                   </IconButton>
@@ -444,6 +444,7 @@ export default function Home() {
                   component="h1" 
                   fontWeight="bold" 
                   gutterBottom
+                  color="textPrimary"
                   sx={{
                     fontSize: { xs: '2.5rem', md: '3.5rem' },
                     lineHeight: 1.2,
@@ -551,6 +552,7 @@ export default function Home() {
               component="h2" 
               sx={styles.sectionTitle}
               data-aos="fade-up"
+              color="textPrimary"
             >
               About Me
             </Typography>
@@ -626,7 +628,7 @@ export default function Home() {
           
           <Container maxWidth="md" sx={styles.sectionContainer}>
             {/* Section title */}
-            <Typography variant="h3" component="h2" sx={styles.sectionTitle}>
+            <Typography variant="h3" component="h2" sx={styles.sectionTitle} color="textPrimary">
               Featured Projects
             </Typography>
             <Divider sx={styles.divider} />
@@ -646,7 +648,7 @@ export default function Home() {
           id="skills" 
           sx={{ 
             py: 12, 
-            bgcolor: darkMode ? '#0a1929' : '#eef6ff',
+            bgcolor: darkMode ? '#04102b' : '#f8fafc',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -662,7 +664,7 @@ export default function Home() {
           
           <Container maxWidth="md" sx={styles.sectionContainer}>
             {/* Section title */}
-            <Typography variant="h3" component="h2" sx={styles.sectionTitle}>
+            <Typography variant="h3" component="h2" sx={styles.sectionTitle} color="textPrimary">
               Technical Skills
             </Typography>
             <Divider sx={styles.divider} />
@@ -837,7 +839,7 @@ export default function Home() {
           
           <Container maxWidth="md" sx={styles.sectionContainer}>
             {/* Section title */}
-            <Typography variant="h3" component="h2" sx={styles.sectionTitle}>
+            <Typography variant="h3" component="h2" sx={styles.sectionTitle} color="textPrimary">
               Get In Touch
             </Typography>
             <Divider sx={styles.divider} />
@@ -860,7 +862,7 @@ export default function Home() {
                   {/* Email link */}
                   <Link 
                     href="mailto:nickmccoy_15@outlook.com" 
-                    color="inherit"
+                    color="textPrimary"
                     underline="none"
                     sx={{ 
                       display: 'flex', 
@@ -885,9 +887,10 @@ export default function Home() {
                       color="inherit"
                       size="small"
                       sx={{ 
+                        color: theme.palette.text.primary,
                         transition: 'transform 0.2s, color 0.2s',
                         '&:hover': {
-                          color: darkMode ? '#f0f6fc' : '#24292e',
+                          color: '#3a86ff',
                           transform: 'translateY(-3px)'
                         }
                       }}
@@ -901,6 +904,7 @@ export default function Home() {
                       color="inherit"
                       size="small"
                       sx={{ 
+                        color: theme.palette.text.primary,
                         transition: 'transform 0.2s, color 0.2s',
                         '&:hover': {
                           color: '#0a66c2',
@@ -917,6 +921,7 @@ export default function Home() {
                       color="inherit"
                       size="small"
                       sx={{ 
+                        color: theme.palette.text.primary,
                         transition: 'transform 0.2s, color 0.2s',
                         '&:hover': {
                           color: '#1da1f2',
@@ -1043,5 +1048,6 @@ export default function Home() {
           </Container>
         </Box>
       </Box>
+    </ThemeProvider>
   );
 }

@@ -35,11 +35,11 @@ export default function JokeDisplay() {
   }, []);
 
   return (
-    <Box sx={{ mt: 8, py: 4, px: 3, bgcolor: "background.paper", borderRadius: 2 }}>
-      <Typography variant="h6">Random Joke</Typography>
+    <Box sx={{ mt: 8, py: 4, px: 3, bgcolor: "background.paper", borderRadius: 2, color: "text.primary" }}>
+      <Typography variant="h6" color="textPrimary">Random Joke</Typography>
 
       {loading && (
-        <Typography sx={{ mt: 1 }}>- Loading...</Typography>
+        <Typography sx={{ mt: 1 }} color="textPrimary">- Loading...</Typography>
       )}
 
       {error && (
@@ -48,8 +48,8 @@ export default function JokeDisplay() {
 
       {joke && (
         <Box sx={{ mt: 2 }}>
-          <Typography variant="body1">{joke.setup}</Typography>
-          <Typography variant="body2" sx={{ fontWeight: 600, mt: 1 }}>{joke.punchline}</Typography>
+          <Typography variant="body1" color="textPrimary">{joke.setup}</Typography>
+          <Typography variant="body2" color="textPrimary" sx={{ fontWeight: 600, mt: 1 }}>{joke.punchline}</Typography>
         </Box>
       )}
 
