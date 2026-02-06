@@ -3,10 +3,17 @@
 import { useState, useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
+interface Joke {
+  setup: string;
+  punchline: string;
+  type: string;
+  id: number;
+}
+
 export default function JokeDisplay() {
-  const [joke, setJoke] = useState(null);
+  const [joke, setJoke] = useState<Joke | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchJoke = async () => {
     setLoading(true);
