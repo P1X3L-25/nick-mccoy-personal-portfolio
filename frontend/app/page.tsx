@@ -69,7 +69,7 @@ export default function Home() {
         main: '#ff006e', // Secondary pink color
       },
       background: {
-        default: darkMode ? '#0a1929' : '#eef6ff', // Page background (light blue)
+        default: darkMode ? '#04102b' : '#f8fafc', // Page background
         paper: darkMode ? '#132f4c' : '#ffffff', // Card/paper background
       },
     },
