@@ -20,8 +20,8 @@
  */
 
 // Import necessary libraries and components
-import { useTheme } from "@mui/material/styles"; // Get the theme from Providers
-import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa"; // Social media icons
+import { useState, useEffect } from "react"; // For state management and side effects
+import { FaGithub, FaLinkedinIn, FaTwitter, FaFacebook } from "react-icons/fa"; // Social media icons
 import { HiOutlineMail } from "react-icons/hi"; // Email icon
 import { IoMoon, IoSunny } from "react-icons/io5"; // Theme toggle icons
 import {
@@ -39,18 +39,93 @@ import {
   Typography, // Text component with different variants
 } from "@mui/material";
 
+import JokeDisplay from "../components/JokeDisplay";
+
 // Main component for the entire page
 export default function Home() {
-  const theme = useTheme();
-  const darkMode = theme.palette.mode === 'dark';
+  // Check if user's system prefers dark mode
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  // State to track if dark mode is active
+  const [darkMode, setDarkMode] = useState(true);
+
+  // Avoid hydration mismatch: only render theme-dependent markup after client mount
+  const [mounted, setMounted] = useState(false);
+
+  // Update dark mode when system preference changes and mark mounted
+  useEffect(() => {
+    setDarkMode(prefersDarkMode);
+    setMounted(true);
+  }, [prefersDarkMode]);
+
+  // Create a theme based on dark/light mode preference
+  const theme = createTheme({
+    // Color palette configuration
+    palette: {
+      mode: darkMode ? 'dark' : 'light', // Overall theme mode
+      primary: {
+        main: '#3a86ff', // Primary blue color
+      },
+      secondary: {
+        main: '#ff006e', // Secondary pink color
+      },
+      background: {
+        default: darkMode ? '#0a1929' : '#eef6ff', // Page background (light blue)
+        paper: darkMode ? '#132f4c' : '#ffffff', // Card/paper background
+      },
+    },
+    // Typography (font) settings
+    typography: {
+      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+      // Make headings bold
+      h1: { fontWeight: 700 },
+      h2: { fontWeight: 700 },
+      h3: { fontWeight: 600 },
+      h4: { fontWeight: 600 },
+      h5: { fontWeight: 600 },
+      h6: { fontWeight: 600 },
+    },
+    // Shape settings (like border radius)
+    shape: {
+      borderRadius: 12, // Rounded corners
+    },
+    // Component-specific style overrides
+    components: {
+      // Button styling
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: 'none', // Don't uppercase button text
+            fontWeight: 600, // Semi-bold button text
+            borderRadius: 8, // Rounded button corners
+            padding: '10px 20px', // Button padding
+          },
+        },
+      },
+      // Card styling
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            borderRadius: 16, // More rounded card corners
+            overflow: 'hidden', // Hide overflow
+          },
+        },
+      },
+      // Paper styling
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            borderRadius: 16, // Rounded paper corners
+          },
+        },
+      },
+    },
+  });
 
   // Custom styles for various elements throughout the site
   const styles = {
-    // Background gradient for the entire page
+    // Background for the entire page - use theme palette so global CSS/variables take effect
     gradientBg: {
-      background: darkMode 
-        ? 'linear-gradient(to bottom right, #0a1929, #132f4c)' // Dark mode gradient
-        : 'linear-gradient(to bottom right, #f8fafc, #e2e8f0)', // Light mode gradient
+      background: theme.palette.background.default,
       minHeight: '100vh', // Full viewport height
     },
     // Navigation bar styling
@@ -209,6 +284,12 @@ export default function Home() {
   };
 
   // THE ACTUAL WEBSITE LAYOUT STARTS HERE
+  if (!mounted) {
+    // Render a lightweight placeholder that uses the CSS variable background to avoid
+    // server/client markup differences while the client finishes mounting.
+    return <Box style={{ minHeight: '100vh', background: 'var(--background)' }} />;
+  }
+
   return (
     <Box sx={styles.gradientBg}>
         {/* ===== NAVIGATION BAR ===== */}
@@ -304,7 +385,7 @@ export default function Home() {
                   
                   {/* Twitter link */}
                   <IconButton 
-                    href="https://twitter.com/johndoe" 
+                    href="https://facebook.com/nick.mccoy.1272" 
                     target="_blank"
                     rel="noopener noreferrer"
                     color="inherit"
@@ -318,7 +399,7 @@ export default function Home() {
                       }
                     }}
                   >
-                    <FaTwitter />
+                    <FaFacebook />
                   </IconButton>
                 </Box>
 
@@ -453,7 +534,7 @@ export default function Home() {
           id="about" 
           sx={{ 
             py: 12, 
-            bgcolor: darkMode ? '#0a1929' : '#f8fafc',
+            bgcolor: darkMode ? '#0a1929' : '#eef6ff',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -563,7 +644,7 @@ export default function Home() {
           id="skills" 
           sx={{ 
             py: 12, 
-            bgcolor: darkMode ? '#0a1929' : '#f8fafc',
+            bgcolor: darkMode ? '#0a1929' : '#eef6ff',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -828,7 +909,7 @@ export default function Home() {
                       <FaLinkedinIn />
                     </IconButton>
                     <IconButton 
-                      href="https://twitter.com/johndoe" 
+                      href="https://facebook.com/nick.mccoy.1272" 
                       target="_blank"
                       rel="noopener noreferrer"
                       color="inherit"
@@ -841,7 +922,7 @@ export default function Home() {
                         }
                       }}
                     >
-                      <FaTwitter />
+                      <FaFacebook />
                     </IconButton>
                   </Box>
                 </Box>
@@ -930,12 +1011,13 @@ export default function Home() {
           </Container>
         </Box>
 
+        <JokeDisplay />
         {/* ===== FOOTER ===== */}
         <Box
           component="footer"
           sx={{
             py: 4,
-            bgcolor: darkMode ? '#0a1929' : '#f8fafc',
+            bgcolor: darkMode ? '#0a1929' : '#eef6ff',
             borderTop: 1,
             borderColor: darkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
           }}
