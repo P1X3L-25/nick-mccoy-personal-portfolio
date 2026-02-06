@@ -24,27 +24,19 @@ import { useState, useEffect } from "react"; // For state management and side ef
 import { FaGithub, FaLinkedinIn, FaTwitter, FaFacebook } from "react-icons/fa"; // Social media icons
 import { HiOutlineMail } from "react-icons/hi"; // Email icon
 import { IoMoon, IoSunny } from "react-icons/io5"; // Theme toggle icons
-import Image from "next/image"; // Next.js optimized Image component
 import {
   AppBar, // Top navigation bar
   Box, // Basic layout container
   Button, // Clickable buttons
-  Card, // Card components for projects
-  CardActions, // Bottom section of cards for buttons
-  CardContent, // Main content area of cards
   Container, // Centered, width-limited container
-  createTheme, // Function to create a theme
-  CssBaseline, // Resets CSS to a consistent baseline
   Divider, // Horizontal line separator
   Grid as MuiGrid, // Layout grid system
   IconButton, // Button with just an icon
   Link, // Hyperlink component
   Paper, // Elevated surfaces
   TextField, // Text input fields
-  ThemeProvider, // Provides theme to child components
   Toolbar, // Container for app bar content
   Typography, // Text component with different variants
-  useMediaQuery, // Hook to check media queries
 } from "@mui/material";
 
 import JokeDisplay from "../components/JokeDisplay";
@@ -261,34 +253,6 @@ export default function Home() {
     },
   };
 
-  // Sample project data - replace with your own
-  const projectsData = [
-    {
-      title: "E-commerce Platform",
-      description: "A full-stack e-commerce solution with React, Node.js, and Stripe integration that handles 10,000+ monthly transactions.",
-      image: "/project1.jpg",
-      technologies: ["React", "Node.js", "MongoDB"],
-      github: "https://github.com/johndoe/ecommerce",
-      demo: "https://ecommerce-demo.example.com"
-    },
-    {
-      title: "SaaS Analytics Dashboard",
-      description: "An analytics dashboard for SaaS businesses with real-time data visualization and custom reporting features.",
-      image: "/project2.jpg",
-      technologies: ["Next.js", "TypeScript", "D3.js"],
-      github: "https://github.com/johndoe/saas-dashboard",
-      demo: "https://saas-dashboard.example.com"
-    },
-    {
-      title: "AI Chat Application",
-      description: "A real-time chat application with AI-powered responses and language translation supporting 20+ languages.",
-      image: "/project3.jpg",
-      technologies: ["React", "Socket.io", "OpenAI API"],
-      github: "https://github.com/johndoe/ai-chat",
-      demo: "https://ai-chat.example.com"
-    },
-  ];
-
   // Frontend skills with proficiency levels
   const frontendSkills = [
     { name: "React / Next.js", value: 95 },
@@ -305,8 +269,7 @@ export default function Home() {
 
   // Other technologies you're familiar with
   const otherTechnologies = [
-    "Docker", "AWS", "CI/CD", "Jest", "Git", 
-    "Redux", "Firebase", "Webpack", "TailwindCSS", "Figma"
+    "Git", "TailwindCSS", "Python", "Linux"
   ];
 
   // Function to smoothly scroll to different sections
@@ -328,9 +291,7 @@ export default function Home() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Reset CSS for consistency */}
-      <Box sx={styles.gradientBg}>
+    <Box sx={styles.gradientBg}>
         {/* ===== NAVIGATION BAR ===== */}
         <AppBar position="sticky" elevation={0} sx={styles.navBar} color="transparent">
           <Container maxWidth="lg">
@@ -449,7 +410,10 @@ export default function Home() {
                   ml: 2,
                 }}>
                   <IconButton 
-                    onClick={() => setDarkMode(!darkMode)} 
+                    onClick={() => {
+                      // Dispatch custom event to toggle dark mode in Providers
+                      window.dispatchEvent(new CustomEvent('toggleDarkMode'));
+                    }} 
                     sx={{ ml: 1 }}
                     color="inherit"
                   >
@@ -499,7 +463,7 @@ export default function Home() {
                       WebkitTextFillColor: 'transparent',
                     }}
                   >
-                    Full Stack Developer
+                    I.T. Generalist
                   </Typography>
                 </Typography>
                 <Typography 
@@ -507,8 +471,7 @@ export default function Home() {
                   color="text.secondary" 
                   sx={{ fontSize: '1.1rem', mt: 3, mb: 4 }}
                 >
-                  I create sophisticated web applications that deliver exceptional
-                  user experiences with modern technologies and clean code.
+                  I build high-performance, responsive web applications and solutions.
                 </Typography>
                 <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
                   <Button
@@ -608,9 +571,9 @@ export default function Home() {
                 paragraph 
                 sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}
               >
-                With over 5 years of experience in web development, I specialize in creating
+                As a college student aiming for a career in Information Technology, some of the things I&apos;ll specialize in will be creating
                 high-performance, responsive web applications using React, Next.js, and Node.js. My
-                approach combines technical expertise with a strong focus on user experience and clean,
+                approach will combine technical expertise with a strong focus on user experience and clean,
                 maintainable code.
               </Typography>
               <Typography 
@@ -618,10 +581,7 @@ export default function Home() {
                 paragraph
                 sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}
               >
-                Previously, I worked at XYZ Technologies where I led the frontend development team,
-                improving application performance by 40% and implementing CI/CD pipelines that reduced
-                deployment time by 65%. I&apos;m passionate about sharing knowledge and have contributed to
-                several open-source projects.
+                I am passionate about leveraging modern web technologies to build solutions that not only meet end-user needs but also drive business success.
               </Typography>
               
               {/* Resume download button */}
@@ -671,62 +631,9 @@ export default function Home() {
             
             {/* Projects grid - using Card components */}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              {projectsData.map((project, index) => (
-                <Card key={index} sx={styles.projectCard} elevation={darkMode ? 1 : 2}>
-                  {/* Card content - title, description, technologies */}
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h5" component="h3" fontWeight="bold" gutterBottom>
-                      {project.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" paragraph>
-                      {project.description}
-                    </Typography>
-                    
-                    {/* Technology tags */}
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}>
-                      {project.technologies.map((tech, techIndex) => (
-                        <Box
-                          key={techIndex}
-                          component="span"
-                          sx={{
-                            px: 1.5,
-                            py: 0.5,
-                            bgcolor: darkMode ? 'rgba(58, 134, 255, 0.15)' : '#eef6ff',
-                            color: darkMode ? '#90caf9' : '#1565c0',
-                            borderRadius: 10,
-                            fontSize: '0.75rem',
-                            fontWeight: 600,
-                          }}
-                        >
-                          {tech}
-                        </Box>
-                      ))}
-                    </Box>
-                  </CardContent>
-                  
-                  {/* Card actions - buttons for code and demo */}
-                  <CardActions sx={{ p: 2, pt: 0 }}>
-                    <Button 
-                      size="small" 
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      startIcon={<FaGithub />}
-                    >
-                      Code
-                    </Button>
-                    <Button 
-                      size="small" 
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      color="primary"
-                    >
-                      Live Demo
-                    </Button>
-                  </CardActions>
-                </Card>
-              ))}
+              <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
+                There&apos;s no projects here at the moment, but this section will have more added to it as I gain more experience.
+              </Typography>
             </Box>
           </Container>
         </Box>
@@ -942,7 +849,7 @@ export default function Home() {
                   paragraph
                   sx={{ mb: 3 }}
                 >
-                  I&apos;m currently looking for new opportunities and freelance projects. If you&apos;d like to
+                  I&apos;m always looking for new opportunities and projects. If you&apos;d like to
                   discuss a potential collaboration or just want to say hi, feel free to reach out!
                 </Typography>
                 
@@ -1134,6 +1041,5 @@ export default function Home() {
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
   );
 }
