@@ -37,6 +37,8 @@ import {
   TextField, // Text input fields
   Toolbar, // Container for app bar content
   Typography, // Text component with different variants
+  createTheme, // Create custom theme
+  useMediaQuery, // Hook to detect media queries
 } from "@mui/material";
 
 import JokeDisplay from "../components/JokeDisplay";
